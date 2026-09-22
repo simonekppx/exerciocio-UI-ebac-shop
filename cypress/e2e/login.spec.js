@@ -28,6 +28,13 @@ context('Funcionalidade Login', () => {
         cy.get('.page-title').should('contain', 'Minha conta')
     });
 
+    it('Login negado usando fixture com senha inválida', () => {
+        cy.fixture('perfil').then((dados) => {
+            cy.login(dados.usuario, dados.senhaInvalida)
+        })
+        cy.get('.woocommerce-error').should('be.visible')
+    });
+
     it('Deve fazer login com sucesso - sem otimização', () => {
         cy.get('#username').type(dadosLogin.usuario)
         cy.get('#password').type(dadosLogin.senha, { log: false })
@@ -36,4 +43,3 @@ context('Funcionalidade Login', () => {
         cy.get('.woocommerce-MyAccount-content > :nth-child(2)').should('contain', 'Olá, aluno_ebac')
     })
 })
-
